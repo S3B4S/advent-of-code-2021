@@ -1,6 +1,5 @@
 import Data.List
 import Control.Arrow ((&&&))
-import Data.Bifunctor (bimap)
 
 data Direction = Up Int | Down Int | Forward Int
 
