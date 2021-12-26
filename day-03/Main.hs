@@ -39,15 +39,6 @@ mapTuple f (x, y) = (f x, f y)
 -- Part 1 solution: 3885894
 
 -- Part 2
-invertBit :: Int -> Int
-invertBit 1 = 0
-invertBit 0 = 1
-invertBit _ = -1
-
-charToInt :: Char -> Int
-charToInt '1' = 1
-charToInt '0' = 0
-
 data System = Oxygen | CO2
 
 count :: Eq a => (a -> Bool) -> [a] -> Int
