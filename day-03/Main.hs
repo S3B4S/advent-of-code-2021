@@ -54,12 +54,12 @@ filterBitCriteria :: System -> [(String, String)] -> [(String, String)]
 filterBitCriteria system bitSequences = (map (\(f, s) -> (tail f, s)) . filter ((== bitCriteria) . head . fst)) bitSequences
   where bitCriteria = determineBitCriteria system bitSequences
 
+findRating :: System -> [(String, String)] -> Maybe String
+findRating sys = fmap (snd . head) . find ((== 1) . length) . iterate (filterBitCriteria sys)
+
 main :: IO ()
 main = print
   . (\(Just x, Just y) -> binaryToDecimal (-1) x * binaryToDecimal (-1) y)
-  . (\x -> (
-      (fmap (snd . head) . find ((== 1) . length) . iterate (filterBitCriteria Oxygen)) x,
-      (fmap (snd . head) . find ((== 1) . length) . iterate (filterBitCriteria CO2)) x)
-    )
+  . (\x -> (findRating Oxygen x, findRating CO2 x))
   . map (\x -> (x, x))
   . lines =<< readFile "input.txt"
