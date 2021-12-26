@@ -57,10 +57,16 @@ filterBitCriteria system bitSequences = (map (\(f, s) -> (tail f, s)) . filter (
 findRating :: System -> [(String, String)] -> Maybe String
 findRating sys = fmap (snd . head) . find ((== 1) . length) . iterate (filterBitCriteria sys)
 
+createTuple :: (a -> b) -> a -> (b, b)
+createTuple f x = (f x, f x)
+
+createTuple2 :: (a -> b) -> (a -> c) -> a -> (b, c)
+createTuple2 f g x = (f x, g x)
+
 main :: IO ()
 main = print
   . (\(Just x, Just y) -> binaryToDecimal (-1) x * binaryToDecimal (-1) y)
-  . (\x -> (findRating Oxygen x, findRating CO2 x))
-  . map (\x -> (x, x))
+  . createTuple2 (findRating Oxygen) (findRating CO2)
+  . map (createTuple id)
   . lines =<< readFile "input.txt"
 -- Part 2 solution: 4375225
