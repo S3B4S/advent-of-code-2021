@@ -63,3 +63,4 @@ main = print
   . (\x -> (findRating Oxygen x, findRating CO2 x))
   . map (\x -> (x, x))
   . lines =<< readFile "input.txt"
+-- Part 2 solution: 4375225
